@@ -6,8 +6,11 @@ var fs = require('fs');
 import TruffleContract from 'truffle-contract'
 import Web3 from 'web3'
 
+import getContractInstance from './helpers/getContract'
+
 const contractA = require('../build/contracts/TokenA.json')
 const contractB = require('../build/contracts/TokenB.json')
+const tokenOracleContract = require('../build/contracts/TokenOracle.json')
 
 
 const port = process.env.PORT || 5000;
@@ -18,24 +21,8 @@ let app
 let owner
 let tokenA
 let tokenB
+let tokenOracle
 
-function fixTruffleContract(contract) {
-    if (typeof contract.currentProvider.sendAsync !== "function") {
-        contract.currentProvider.sendAsync = function() {
-            return contract.currentProvider.send.apply(
-                contract.currentProvider, arguments
-            );
-        };
-    }
-    return contract;
-}
-
-async function getContractInstance(abi, provider) {
-  let contract = TruffleContract(abi)
-  contract.setProvider(provider)
-  contract = fixTruffleContract(contract)
-  return await contract.deployed()
-}
 
 async function init() {
   app = express()
@@ -47,6 +34,7 @@ async function init() {
   
   tokenA = await getContractInstance(contractA, web3.currentProvider)
   tokenB = await getContractInstance(contractB, web3.currentProvider)
+  tokenOracle = await getContractInstance(tokenOracleContract, web3.currentProvider)
 
   MongoClient.connect(db.url, (err, database) => {
     if (err) return console.log(err);
@@ -57,7 +45,6 @@ async function init() {
         console.log(`listening on port ${port}`);
     })
   })
-  
 }
 
 init()
@@ -71,7 +58,8 @@ app.get('/token/:type/:amount/:address', async (req, res) => {
     const type = req.params.type
     const amount = req.params.amount
     const address = req.params.address
-    let transaction = await tokenA.create(address, amount, {from : owner})
+    let token = (type == "A") ? tokenA : tokenB
+    let transaction = await token.create(address, amount, {from : owner})
     res.send({ "transaction hash": transaction })
     
 })
@@ -79,7 +67,8 @@ app.get('/token/:type/:amount/:address', async (req, res) => {
 app.get('/balance/:type/:address', async (req, res) => {
     const type = req.params.type
     const address = req.params.address
-    res.send({"amount" : await tokenA.balanceOf(address)})
+    let token = (type == "A") ? tokenA : tokenB
+    res.send({"amount" : await token.balanceOf(address)})
 })
 
 
