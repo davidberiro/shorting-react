@@ -3,7 +3,12 @@ const DEFAULT_NETWORK_ID = process.env.REACT_APP_DEFAULT_NETWORK_ID || '4447'
 const DEFAULT_NETWORK_NAME =
   process.env.REACT_APP_DEFAULT_NETWORK_NAME || 'Private Network'
 
+const ETHERSCAN_URL =
+  process.env.REACT_APP_ETHERSCAN_ADDRESS || 'https://etherscan.io'
+
+
 export {
   DEFAULT_NETWORK_ID,
-  DEFAULT_NETWORK_NAME
+  DEFAULT_NETWORK_NAME,
+  ETHERSCAN_URL
 }

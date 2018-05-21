@@ -5,19 +5,16 @@ import store from './store'
 import { getAccount } from './web3/web3Utils'
 import { Layout, Modal } from 'antd'
 import './index.css'
+import './App.css'
+import Header from './components/Header'
 import Router from './Router'
-
+import Footer from './components/Footer'
 
 import { initializeApp } from './actions'
-
 import { DEFAULT_NETWORK_ID, DEFAULT_NETWORK_NAME } from './consts'
 
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-
-  }
 
   async componentWillMount() {
     const web3 = await getWeb3()
@@ -30,12 +27,7 @@ class App extends Component {
       network,
     }))
 
-    if (network !== DEFAULT_NETWORK_ID) {
-      this.showNetworkMismatchModal()
-      console.log('wrong network')
-    } 
-
-    
+    if (network !== DEFAULT_NETWORK_ID) this.showNetworkMismatchModal()
 
   }
 
@@ -52,8 +44,9 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Layout style={{ height: '100%', overflowX: 'hidden' }}>
-          {/* <h1>Hellodave </h1> */}
+          <Header />
           <Router />
+          <Footer />
         </Layout>
       </Provider>
     );
