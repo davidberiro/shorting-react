@@ -1,0 +1,9 @@
+const DEFAULT_NETWORK_ID = process.env.REACT_APP_DEFAULT_NETWORK_ID || '4447'
+
+const DEFAULT_NETWORK_NAME =
+  process.env.REACT_APP_DEFAULT_NETWORK_NAME || 'Private Network'
+
+export {
+  DEFAULT_NETWORK_ID,
+  DEFAULT_NETWORK_NAME
+}
