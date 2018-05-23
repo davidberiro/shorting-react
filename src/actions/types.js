@@ -7,4 +7,9 @@ const web3 = {
   setUserAddress: 'SET_USER_ADDRESS',
 }
 
-export { app, web3 }
+const tokens = {
+  updateTokenCount: 'UPDATE_TOKEN_COUNT',
+  receivedTokens: 'RECEIVED_TOKENS', 
+}
+
+export { app, web3, tokens }

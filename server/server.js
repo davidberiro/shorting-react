@@ -36,19 +36,29 @@ async function init() {
   tokenB = await getContractInstance(contractB, web3.currentProvider)
   tokenOracle = await getContractInstance(tokenOracleContract, web3.currentProvider)
 
-  MongoClient.connect(db.url, (err, database) => {
-    if (err) return console.log(err);
-    let db = database.db("david-dev");
-    require('./app/routes')(app, db);
-  
+    // MongoClient.connect(db.url, (err, database) => {
+    // if (err) return console.log(err);
+    // let db = database.db("david-dev");
+    // require('./app/routes')(app, db);
+
+    // app.listen(port, () => {
+    //     console.log(`listening on port ${port}`);
+    // })
+    // })
     app.listen(port, () => {
-        console.log(`listening on port ${port}`);
+        console.log(`listening on port ${port}`)
     })
-  })
 }
+
+
 
 init()
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 app.get('/token', (req, res) => {
     res.send({ "owner": owner })
@@ -68,7 +78,8 @@ app.get('/balance/:type/:address', async (req, res) => {
     const type = req.params.type
     const address = req.params.address
     let token = (type == "A") ? tokenA : tokenB
-    res.send({"amount" : await token.balanceOf(address)})
+    let amount = await token.balanceOf(address)
+    res.send({"amount" : amount})
 })
 
 

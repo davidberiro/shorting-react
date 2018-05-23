@@ -8,4 +8,9 @@ export default {
     provider: '',
     network: 0,
   },
+  tokens: {
+    tokenA: 0,
+    tokenB: 0,
+    updateTokens: true,
+  }
 }
