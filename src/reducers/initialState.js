@@ -12,5 +12,10 @@ export default {
     tokenA: 0,
     tokenB: 0,
     updateTokens: true,
+    updateTokenRates: true,
+    tokenRates: {
+      tokenA: 1,
+      tokenB: 1,
+    },
   }
 }

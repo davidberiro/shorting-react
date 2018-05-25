@@ -10,4 +10,14 @@ const receivedTokens = () => ({
   payload: {}
 })
 
-export { updateTokenCount, receivedTokens }
+const updateTokenPrices = () => ({
+  type: tokenTypes.updateTokenPrices,
+  payload: {}
+})
+
+const setTokenPrices = ({ tokenA, tokenB }) => ({
+  type: tokenTypes.setTokenPrices,
+  payload: { tokenA, tokenB }
+})
+
+export { updateTokenCount, receivedTokens, updateTokenPrices, setTokenPrices }

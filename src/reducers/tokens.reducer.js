@@ -3,6 +3,7 @@ import initialState from './initialState'
 
 const actions = {
   [tokenTypes.updateTokenCount]: (state, payload) => ({
+    ...state,
     tokenA: payload.tokenA,
     tokenB: payload.tokenB,
     updateTokens: false,
@@ -10,6 +11,18 @@ const actions = {
   [tokenTypes.receivedTokens]: (state, payload) => ({
     ...state,
     updateTokens: true,
+  }),
+  [tokenTypes.updateTokenPrices]: (state, payload) => ({
+    ...state,
+    updateTokenRates: true,
+  }),
+  [tokenTypes.setTokenPrices]: (state, payload) => ({
+    ...state,
+    updateTokenRates: false,
+    tokenRates: {
+      tokenA: payload.tokenA,
+      tokenB: payload.tokenB,
+    },
   }),
 }
 

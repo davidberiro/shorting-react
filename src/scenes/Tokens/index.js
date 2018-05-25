@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import TokenTable from './TokenTable'
 import TokenGiver from './TokenGiver'
+import TokenRate from './TokenRate'
 import ContentCard from '../../components/cards/ContentCard'
 
 class Tokens extends PureComponent {
@@ -12,6 +13,9 @@ class Tokens extends PureComponent {
       </ContentCard>
       <ContentCard>
         <TokenGiver />
+      </ContentCard>
+      <ContentCard>
+        <TokenRate />
       </ContentCard>
       </div>
     )
