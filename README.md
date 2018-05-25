@@ -4,10 +4,10 @@ This is an attempt to implement contracts that will allow users to short ERC20 c
 
 ## Structure
 
-`src` folder contains the frontend written in react
-`contracts` folder contains all the smart contracts written in solidity
-`test` folder contains the tests written in js with the truffle/mocha test framework
-`server` folder contains the backend written with express
+`src` folder contains the frontend written in react.
+`contracts` folder contains all the smart contracts written in solidity.
+`test` folder contains the tests written in js with the truffle/mocha test framework.
+`server` folder contains the backend written with express.
 
 ## Getting Started
 
