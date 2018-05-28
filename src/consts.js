@@ -8,9 +8,12 @@ const ETHERSCAN_URL =
 
 const DEFAULT_API_URL = 'http://localhost:5000'
 
+const DECIMALS = parseFloat(Math.pow(10, 18))
+
 export {
   DEFAULT_NETWORK_ID,
   DEFAULT_NETWORK_NAME,
   ETHERSCAN_URL,
-  DEFAULT_API_URL
+  DEFAULT_API_URL,
+  DECIMALS
 }

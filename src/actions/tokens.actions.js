@@ -20,4 +20,21 @@ const setTokenPrices = ({ tokenA, tokenB }) => ({
   payload: { tokenA, tokenB }
 })
 
-export { updateTokenCount, receivedTokens, updateTokenPrices, setTokenPrices }
+const setTokenAllowance = ({ tokenA, tokenB }) => ({
+  type: tokenTypes.setTokenAllowance,
+  payload: { tokenA, tokenB }
+})
+
+const updateTokenAllowance = () => ({
+  type: tokenTypes.updateTokenAllowance,
+  payload: {}
+})
+
+export { 
+  updateTokenCount,
+  receivedTokens,
+  updateTokenPrices,
+  setTokenPrices,
+  updateTokenAllowance,
+  setTokenAllowance,
+}

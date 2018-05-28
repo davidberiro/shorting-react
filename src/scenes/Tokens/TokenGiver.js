@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Select, Button, Modal } from 'antd';
 import { connect } from 'react-redux'
-import { DEFAULT_API_URL } from '../../consts'
+import { DEFAULT_API_URL, DECIMALS } from '../../consts'
 import axios from 'axios'
 import store from '../../store'
 import { receivedTokens } from '../../actions'
@@ -26,10 +26,11 @@ class AmountInput extends Component {
     }
   }
   handleNumberChange = (e) => {
-    const number = parseInt(e.target.value || 0, 10);
+    let number = parseFloat(e.target.value || 0, 10);
     if (isNaN(number)) {
       return;
     }
+    number = e.target.value
     if (!('value' in this.props)) {
       this.setState({ number });
     }
@@ -79,10 +80,9 @@ class TokenGiver extends Component {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        // console.log('Received values of form: ', values);
         let address = this.props.address
         let type = values.Amount.currency
-        let amount = values.Amount.number
+        let amount = parseFloat(values.Amount.number) * DECIMALS
         try {
           let res = await axios.get(`${DEFAULT_API_URL}/token/${type}/${amount}/${address}`)
           store.dispatch(receivedTokens())
@@ -98,7 +98,7 @@ class TokenGiver extends Component {
     });
   }
   checkPrice = (rule, value, callback) => {
-    if (value.number > 0) {
+    if (parseFloat(value.number) >= 0) {
       callback();
       return;
     }

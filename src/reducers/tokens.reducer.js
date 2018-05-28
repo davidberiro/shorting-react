@@ -24,6 +24,18 @@ const actions = {
       tokenB: payload.tokenB,
     },
   }),
+  [tokenTypes.setTokenAllowance]: (state, payload) => ({
+    ...state,
+    updateTokenAllowance: false,
+    tokenAllowance: {
+      tokenA: payload.tokenA,
+      tokenB: payload.tokenB,
+    },
+  }),
+  [tokenTypes.updateTokenAllowance]: (state, payload) => ({
+    ...state,
+    updateTokenAllowance: true,
+  })
 }
 
 const tokens = (state = initialState.tokens, action) => {

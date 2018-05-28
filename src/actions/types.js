@@ -11,7 +11,9 @@ const tokens = {
   updateTokenCount: 'UPDATE_TOKEN_COUNT',
   receivedTokens: 'RECEIVED_TOKENS',
   updateTokenPrices: 'UPDATE_TOKEN_PRICES',
-  setTokenPrices: 'SET_TOKEN_PRICES', 
+  setTokenPrices: 'SET_TOKEN_PRICES',
+  updateTokenAllowance: 'UPDATE_TOKEN_ALLOWANCE',
+  setTokenAllowance: 'SET_TOKEN_ALLOWANCE', 
 }
 
 export { app, web3, tokens }

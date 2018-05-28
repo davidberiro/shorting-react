@@ -1,7 +1,7 @@
 
-const offersRoutes = require('./offers_routes');
+const allowanceRoutes = require('./allowance_routes');
 
 module.exports = function(app, db) {
-    offersRoutes(app, db);
+    allowanceRoutes(app, db);
     //other routes can go here too
 }

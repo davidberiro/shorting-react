@@ -13,9 +13,14 @@ export default {
     tokenB: 0,
     updateTokens: true,
     updateTokenRates: true,
+    updateTokenAllowance: true,
     tokenRates: {
       tokenA: 1,
       tokenB: 1,
+    },
+    tokenAllowance: {
+      tokenA: 0,
+      tokenB: 0,
     },
   }
 }

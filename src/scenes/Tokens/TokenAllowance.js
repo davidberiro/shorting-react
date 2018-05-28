@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { DEFAULT_API_URL, DECIMALS } from '../../consts'
 import axios from 'axios'
 import store from '../../store'
-import { updateTokenPrices } from '../../actions'
+import { updateTokenAllowance } from '../../actions'
+import { setAllowance } from '../../web3/tokens'
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -67,7 +68,7 @@ class AmountInput extends Component {
           style={{ width: '37%' }}
           onChange={this.handleCurrencyChange}
         >
-          {/* <Option value="A">Token A</Option> */}
+          <Option value="A">Token A</Option>
           <Option value="B">Token B</Option>
         </Select>
       </span>
@@ -75,7 +76,7 @@ class AmountInput extends Component {
   }
 }
 
-class TokenRate extends Component {
+class TokenAllowance extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
@@ -83,8 +84,12 @@ class TokenRate extends Component {
         let type = values.Amount.currency
         let amount = parseFloat(values.Amount.number) * DECIMALS
         try {
-          let res = await axios.get(`${DEFAULT_API_URL}/setprice/${type}/${amount}/`)
-          store.dispatch(updateTokenPrices())
+          let res = await axios.get(`${DEFAULT_API_URL}/shortingaddress`)
+          let address = res.data.address
+          await setAllowance(type, address, amount, this.props.address)
+          let [tokenA, tokenB] = type == 'A' ? [amount, this.props.tokenAllowance.tokenB] : [this.props.tokenAllowance.tokenA, amount]
+          await axios.post(`${DEFAULT_API_URL}/allowance`, { address: this.props.address, tokenA, tokenB })
+          store.dispatch(updateTokenAllowance())
         } catch (err) {
            console.log(err)
            Modal.error({
@@ -113,9 +118,9 @@ class TokenRate extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form layout="inline" onSubmit={this.handleSubmit}>
-        <FormItem label="Set Rate">
+        <FormItem label="Set Allowance for shorting contract">
           {getFieldDecorator('Amount', {
-            initialValue: { number: 1, currency: 'B' },
+            initialValue: { number: 0, currency: 'A' },
             rules: [{ validator: this.checkPrice }],
           })(<AmountInput />)}
         </FormItem>
@@ -127,10 +132,11 @@ class TokenRate extends Component {
   }
 }
 
-const totalForm = Form.create()(TokenRate)
+const totalForm = Form.create()(TokenAllowance)
 
-const mapStateToProps = ({ web3: { user } }) => ({
-  address: user
+const mapStateToProps = ({ tokens, web3: { user } }) => ({
+  ...tokens,
+  address: user,
 })
 
 export default connect(mapStateToProps, {

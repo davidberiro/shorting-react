@@ -1,3 +1,15 @@
+const exchangeMenu = [
+  {
+    name: '',
+    path: '',
+  },
+  {
+    name: '',
+    path: '',
+  },
+]
+
+
 const pages = [
   {
     key: 0,
@@ -14,8 +26,8 @@ const pages = [
     key: 2,
     name: 'Exchange',
     path: '/exchange/basic',
-    // dropdown: true,
-    // options: exchangeMenu,
+    dropdown: true,
+    options: exchangeMenu,
   },
   {
     key: 3,
