@@ -1,11 +1,11 @@
 const exchangeMenu = [
   {
-    name: '',
-    path: '',
+    name: 'Offer Short',
+    path: '/offershort',
   },
   {
-    name: '',
-    path: '',
+    name: 'Buy Short Position',
+    path: '/buyshort',
   },
 ]
 
@@ -33,6 +33,16 @@ const pages = [
     key: 3,
     name: 'Tokens',
     path: '/tokens',
+  },
+  {
+    key: 4,
+    name: '',
+    path: '',
+  },
+  {
+    key: 5,
+    name: '',
+    path: '',
   },
 ]
 
