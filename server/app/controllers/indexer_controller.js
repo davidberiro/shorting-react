@@ -1,5 +1,5 @@
 
-module.exports = (db, contracts) => {
+module.exports = (contracts) => {
   var module = {}
 
   module.add_intent = async (req, res) => {

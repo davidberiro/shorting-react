@@ -1,8 +1,8 @@
 require('dotenv').config()
-const express = require('express');
-const bodyParser= require('body-parser');
-var MongoClient = require('mongodb').MongoClient
+import express from 'express'
+import bodyParser from 'body-parser'
 import getAllContracts from './app/web3/contracts'
+import mongoose from 'mongoose'
 
 const port = process.env.PORT || 5000;
 
@@ -19,19 +19,22 @@ async function init() {
   contracts = await getAllContracts()
   //remove this line when creating shorting routes? 
   shorting = contracts.shorting
+  mongoose.Promise = Promise;
 
-  MongoClient.connect(process.env.MONGO_URL, (err, database) => {
-    if (err) return console.log(err);
-    dbo = database.db("david-dev");
-    dbo.collection('allowance').remove({});
-    require('./app/routes')(app, dbo, contracts);
+  mongoose.connect(process.env.MONGO_URI, () => {
+    console.log('connected to database')
+    require('./app/routes')(app, contracts)
     app.listen(port, () => {
-        console.log(`listening on port ${port}`);
+      console.log(`listening on port ${port}`);
     })
   })
 }
 
-init()
+init().then(() => {
+  mongoose.connection.on('error', () => {
+    throw new Error('Unable to connect to database')
+  })
+})
 
 // this needs to be here in order to accept requests made locally
 app.use((req, res, next) => {
@@ -40,6 +43,6 @@ app.use((req, res, next) => {
     next();
   });
 
-  app.get('/shortingaddress', async (req, res) => {
-      res.send({ "address" : shorting.address })
-  })
+app.get('/shortingaddress', async (req, res) => {
+    res.send({ "address" : shorting.address })
+})

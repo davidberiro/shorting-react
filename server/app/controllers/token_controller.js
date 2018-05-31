@@ -1,5 +1,5 @@
 
-module.exports = (db, contracts) => {
+module.exports = (contracts) => {
   var module = {}
   
   let tokenA = contracts.tokenA

@@ -75,8 +75,7 @@ contract Shorting is Ownable {
                   
     // checking that the order hasnt expired
     if (now > orderExpiration) {
-      Failed(1, lenderAddress, lentToken, lentAmount, shorterAddress, stakedToken,
-            stakedAmount, orderExpiration, shortExpiration, nonce);
+      emit Failed(1, lenderAddress, lentToken, lentAmount, shorterAddress, stakedToken, stakedAmount, orderExpiration, shortExpiration, nonce);
       return;
     }
     
